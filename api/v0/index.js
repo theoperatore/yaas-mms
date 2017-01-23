@@ -10,7 +10,7 @@ module.exports = function getV0Routes(twilioService, yaas) {
   });
 
   router.post('/sms', (req, res) => {
-    console.log(req.body);
+    console.log(req.params.body);
 
     const testResp = twilioService.createTwimlResponseForMMS("A test message", "http://media0.giphy.com/media/msKNSs8rmJ5m/giphy.gif");
     res.writeHead(200, { 'Content-Type': 'text/xml' });
