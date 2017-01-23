@@ -1,7 +1,7 @@
 'use strict';
 
 function message(body, media) {
-  return `<Message><Body>${body}</Body><Media>${media}</Media>`;
+  return `<Message><Body>${body}</Body><Media>${media}</Media></Message>`;
 }
 
 function response(body, media) {
