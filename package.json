@@ -6,6 +6,7 @@
   "author": "Alex Petersen",
   "license": "MIT",
   "dependencies": {
+    "body-parser": "^1.16.0",
     "es6-promise": "^4.0.5",
     "express": "^4.14.0",
     "forever": "^0.15.3",
