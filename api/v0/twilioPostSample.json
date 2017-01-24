@@ -1,0 +1,22 @@
+/* as urlencoded form data */
+{
+ "ToCountry": "US",
+ "ToState": "WI",
+ "SmsMessageSid": "SM9525852d103dc869fcff0f6d0dc4846c",
+ "NumMedia": "0",
+ "ToCity": "BEAVER DAM",
+ "FromZip": "54956",
+ "SmsSid": "SM9525852d103dc869fcff0f6d0dc4846c",
+ "FromState": "WI",
+ "SmsStatus": "received",
+ "FromCity": "APPLETON",
+ "Body": "Now with body parsing!",
+ "FromCountry": "US",
+ "To": "+19203194412",
+ "ToZip": "53916",
+ "NumSegments": "1",
+ "MessageSid": "SM9525852d103dc869fcff0f6d0dc4846c",
+ "AccountSid": "AC8b4c452e4c76566a2f2671f51207cf29",
+ "From": "+19208586180",
+ "ApiVersion": "2010-04-01"
+}

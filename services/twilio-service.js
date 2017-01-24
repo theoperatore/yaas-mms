@@ -19,8 +19,8 @@ module.exports = function createTwilioService(twilioClient) {
         });
       });
     },
-    createTwimlResponseForMMS(text, gifUrl) {
-      return response(text, gifUrl);
+    createTwimlResponseForMMS(data) {
+      return response(data.text, data.media);
     }
   };
 }
