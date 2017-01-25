@@ -6,17 +6,11 @@ require('isomorphic-fetch');
 
 const bodyParser = require('body-parser');
 const express = require('express');
-const twilio = require('twilio');
-
-const createYaaSService = require('./services/yaas-service').createYaaSService;
-// const createTwilioService = require('./services/twilio-service').createTwilioService;
-
+const yaasConstructor = require('./services/yaas-service');
 const v0Routes = require('./api/v0');
-const app = express();
 
-// const twilioClient = twilio(process.env.TWILIO_SID, process.env.TWILIO_AUTH_TOKEN);
-// const twilioService = createTwilioService(twilioClient);
-const yaas = createYaaSService(process.env.YAAS_URL);
+const app = express();
+const yaas = yaasConstructor.createYaaSService(process.env.YAAS_URL);
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use('/api/v0', v0Routes(yaas));
