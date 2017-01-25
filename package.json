@@ -5,6 +5,9 @@
   "main": "server.js",
   "author": "Alex Petersen",
   "license": "MIT",
+  "scripts": {
+    "remote": "ssh root@138.197.74.36"
+  },
   "dependencies": {
     "body-parser": "^1.16.0",
     "chalk": "^1.1.3",
