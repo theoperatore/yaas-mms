@@ -1,14 +1,30 @@
 'use strict';
 
-function message(body, media) {
-  return `<Message><Body>${body}</Body><Media>${media}</Media></Message>`;
+function media(url) {
+  return `<Media>${url}</Media>`;
 }
 
-function response(body, media) {
-  return `<?xml version="1.0" encoding="UTF-8"?><Response>${message(body, media)}</Response>`;
+function body(text) {
+  return `<Body>${text}</Body>`;
 }
 
-module.exports = function createTwilioService(twilioClient) {
+function message(text, url) {
+  return `<Message>${body(text)}${media(url)}</Message>`;
+}
+
+function response(text, url) {
+  return `<?xml version="1.0" encoding="UTF-8"?><Response>${message(text, url)}</Response>`;
+}
+
+function createTwimlResponseForMMS(data) {
+  if (!data.text) {
+    throw new Error("TWIML_ERROR: cannot respond without text");
+  }
+
+  return response(data.text, data.media);
+}
+
+function createTwilioService(twilioClient) {
   return {
     sendMMS(twilioMessageObject) {
       return new Promise((resolve, reject) => {
@@ -19,8 +35,8 @@ module.exports = function createTwilioService(twilioClient) {
         });
       });
     },
-    createTwimlResponseForMMS(data) {
-      return response(data.text, data.media);
-    }
   };
 }
+
+exports.createTwimlResponseForMMS = createTwimlResponseForMMS;
+exports.createTwilioService = createTwilioService;

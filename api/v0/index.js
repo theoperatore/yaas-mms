@@ -1,8 +1,10 @@
 'use strict';
 
 const Router = require('express').Router;
+const twilioService = require('../../services/twilio-service');
+const createTwimlResponseForMMS = twilioService.createTwimlResponseForMMS;
 
-function getUserQuestionFromPost(postBody) => {
+function getUserQuestionFromPost(postBody) {
   return Promise.resolve(postBody.Body);
 }
 
@@ -28,24 +30,26 @@ function respondWithError(res) {
   }
 }
 
-function respondWithHeartbeat(res) {
-  return res.status(200).send('heartbeat');
+function respondWithHeartbeat() {
+  return (req, res) => res.status(200).send('heartbeat');
 }
 
-function askYaasAndRespond(req, res) {
-  return getUserQuestionFromPost(req.body)
-    .then(yaas.answer)
-    .then(mapYaaSResponseToTwimlData)
-    .then(twilioService.createTwimlResponseForMMS)
-    .then(respondWithTwiml(res))
-    .catch(respondWithError(res));
+function askYaasAndRespond(yaas) {
+  return (req, res) => {
+    return getUserQuestionFromPost(req.body)
+      .then(yaas.answer)
+      .then(mapYaaSResponseToTwimlData)
+      .then(createTwimlResponseForMMS)
+      .then(respondWithTwiml(res))
+      .catch(respondWithError(res));
+  }
 }
 
-module.exports = function getV0Routes(twilioService, yaas) {
+module.exports = function getV0Routes(yaas) {
   const router = Router();
 
-  router.get('/ping', respondWithHeartbeat);
-  router.post('/sms', askYaasAndRespond);
+  router.get('/ping', respondWithHeartbeat());
+  router.post('/sms', askYaasAndRespond(yaas));
 
   return router;
 }

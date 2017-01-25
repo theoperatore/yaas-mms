@@ -16,7 +16,7 @@ function sendQuestion(url, question) {
     .then(r => r.json());
 }
 
-module.exports = function createYaaSService(url) {
+function createYaaSService(url) {
   if (!url) {
     throw new Error(`NO_YAAS_URL: the url '${url}' is not valid`);
   }
@@ -27,3 +27,5 @@ module.exports = function createYaaSService(url) {
     }
   }
 }
+
+exports.createYaaSService = createYaaSService;
