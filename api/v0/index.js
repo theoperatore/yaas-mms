@@ -1,14 +1,20 @@
 'use strict';
 
 const Router = require('express').Router;
+const logger = require('../../lib/log');
 const twilioService = require('../../services/twilio-service');
 const createTwimlResponseForMMS = twilioService.createTwimlResponseForMMS;
 
+const logInfo = logger.logInfo;
+const logError = logger.logError;
+
 function getUserQuestionFromPost(postBody) {
+  logInfo('asking question:', postBody.Body);
   return Promise.resolve(postBody.Body);
 }
 
 function mapYaaSResponseToTwimlData(yaasResponse) {
+  logInfo('got yaas response', yaasResponse.text, yaasResponse.gif.image_url);
   return {
     text: yaasResponse.text,
     media: yaasResponse.gif.image_url,
@@ -17,7 +23,7 @@ function mapYaaSResponseToTwimlData(yaasResponse) {
 
 function respondWithTwiml(res) {
   return twiml => {
-    console.log('responding with twiml: ', twiml);
+    logInfo('responding with twiml: ', twiml);
     res.writeHead(200, { 'Content-Type': 'text/xml' });
     return res.end(twiml);
   }
@@ -25,13 +31,16 @@ function respondWithTwiml(res) {
 
 function respondWithError(res) {
   return err => {
-    console.error(err);
+    logError(err.message);
     return res.json(err);
   }
 }
 
 function respondWithHeartbeat() {
-  return (req, res) => res.status(200).send('heartbeat');
+  return (req, res) => {
+    logInfo('ping...');
+    return res.status(200).send('heartbeat');
+  }
 }
 
 function askYaasAndRespond(yaas) {
