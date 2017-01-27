@@ -6,6 +6,7 @@
   "author": "Alex Petersen",
   "license": "MIT",
   "scripts": {
+    "dev": "node server.js",
     "start": "forever start server.js -o yaas-log -e yaas-err-log --colors",
     "stop": "forever stop server.js",
     "logs": "forever logs server.js",
